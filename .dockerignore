@@ -1,0 +1,8 @@
+bot/__pycache__/
+api/__pycache__/
+api/notebook/dataset/
+api/notebook/data_preparation.ipynb/
+api/notebook/data_sep.py/
+api/notebook/__pycache__/
+.venv/
+.env/

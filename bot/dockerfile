@@ -1,0 +1,17 @@
+# Use the official Python 3.8 slim image as the base image
+FROM python:3.10-slim
+
+# Set the working directory in the container to /bot
+WORKDIR /bot
+
+# Copy the requirements.txt file into the container
+COPY ./requirements.txt .
+
+# Install dependencies listed in requirements.txt
+RUN pip install -r requirements.txt
+
+# Copy the bot.py script into the container
+COPY ./bot.py .
+
+# Define the command to run the bot.py script
+CMD ["python", "bot.py"]
