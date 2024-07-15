@@ -1,0 +1,6 @@
+.env
+bot/__pycache__/
+api/__pycache__/
+api/notebook/__pycache__/
+api/notebook/dataset/Fruit And Vegetable Diseases Dataset
+.venv/
