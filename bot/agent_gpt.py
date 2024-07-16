@@ -42,8 +42,8 @@ def gpt_yes_no(prediction):
     You will receive fruit classifications (Rotten or Healthy) predicted by a PyTorch algorithm.
     The user has sent an image of their fruit, and you receive the prediction to formulate a response.
     - Be polite and use emojis in your responses.
-    - If the fruit is good (Healthy), ask the user if they would like to make a recipe with this fruit.
-    - If the fruit is bad (Rotten), ask the user if they had planned to make a recipe with this fruit.
+    - If the fruit is good (Healthy), ask the user if they would like to make a recipe with this fruit.  
+    - If the fruit is bad (Rotten), ask the user if they had planned to make a recipe with this fruit. 
     """
 
     # Calling the GPT-3.5-turbo model to generate a response based on the prediction.
@@ -69,12 +69,12 @@ def gpt_question(prediction):
     syst = """
     You are FruitsBot, an intelligent assistant specialized in suggesting recipes using fruits.
     - If the selected fruit is in good condition, suggest a recipe idea using that fruit.
-    - If the fruit is in bad condition, ask the user what recipe they had planned to make with that fruit.
+    - If the fruit is in bad condition, ask the user what recipe they had planned to make with that fruit. Just ask the question without saying anything else.
     """
 
     # API call to the GPT-3.5-turbo model with the specific context and prediction.
     response = client.chat.completions.create(
-        model="gpt-3.5-turbo",
+        model="gpt-4o",
         messages=[
             {"role": "system", "content": syst},
             {"role": "user", "content": prediction}, 
@@ -95,13 +95,14 @@ def gpt_recipe(recipe, prediction):
     You will receive instructions to make a recipe.
     Here is also a prediction: {prediction} which was made from an image sent by the user of their fruit.
     - If {prediction} == no_class, then suggest a recipe based on the user's request.
-    - If {prediction} is a rotten fruit, it means that the user had planned to make the recipe with this fruit: {prediction}. Therefore, suggest an alternative.
+    - If {prediction} is a rotten fruit, it means that the user had planned to make the recipe with this fruit: {prediction}. Therefore, suggest an alternative with other fruits. the recipe should not be too long as it will be given through a chatbot.
     - If {prediction} is a healthy fruit, don't necessarily take it into account if the user doesn't ask to use it in their recipe.
     """
 
     # Calling the GPT-4 model to handle the complex logic provided in the system message.
     response = client.chat.completions.create(
-        model="gpt-4",
+        model="gpt-4o",
+        max_tokens= 1000,
         messages=[
             {"role": "system", "content": syst},
             {"role": "user", "content": recipe}, 
@@ -119,12 +120,12 @@ def chat_gpt(text_message):
     syst = f"""
     You are FruitsBot, an intelligent assistant specialized in managing fruits and vegetables. Respond politely with emojis 
     to the user. You also know how to suggest recipes. You can also analyze the freshness of fruits and vegetables from images
-    (an API will be there to help you do this).
+    (an API will be there to help you do this). If the user doesn't say hello in his question, don't say hello.
     """
     
     # Generating a response to the user's message using GPT-3.5-turbo.
     response = client.chat.completions.create(
-        model="gpt-3.5-turbo",
+        model="gpt-4o",
         messages=[
             {"role": "system", "content": syst},
             {"role": "user", "content": text_message}, 
